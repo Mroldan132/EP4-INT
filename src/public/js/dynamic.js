@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
   const menuLinks = $$(".menu-link");
   const contentContainer = $("#dynamic-content");
@@ -7,15 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
     link.addEventListener("click", (event) => {
       event.preventDefault();
       const target = link.getAttribute("data-target");
-      if (!$(`#script-${target}`)) {
-        const script = document.createElement('script');
-        script.src = `/js/${target}.js`;
-        script.id = `script-${target}`;
-        script.onload = () => {
-          console.log(`${target}.js cargado correctamente.`);
-        };
-        document.body.appendChild(script);
-      }
 
       fetch(`/partials/${target}.html`)
         .then(response => {
@@ -27,13 +17,32 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(html => {
           contentContainer.innerHTML = html;
         })
-        .then(response => {
+        .then(() => {
+          if (!$(`#script-${target}`)) { 
+            return new Promise((resolve, reject) => {
+              const script = document.createElement('script');
+              script.src = `/js/${target}.js`;
+              script.id = `script-${target}`;
+              script.onload = () => {
+                console.log(`${target}.js cargado correctamente.`);
+                resolve(); 
+              };
+              script.onerror = () => reject(new Error(`Error al cargar el script ${target}.js`));
+              document.body.appendChild(script);
+            });
+          }
+        })
+        .then(() => {
           switch (target) {
             case 'categorias':
               obtenerCategorias();
               break;
             case 'meseros':
               obtenerMeseros();
+              break;
+            case 'platos':
+              obtenerPlatos();
+              llenarCategorias();
               break;
           }
         })
@@ -42,5 +51,4 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
   });
-
 });
