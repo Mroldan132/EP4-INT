@@ -2,6 +2,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuLinks = $$(".menu-link");
   const contentContainer = $("#dynamic-content");
 
+  //Movimiento del Slider
+  $('#toggleSidebar').addEventListener('click', () => {
+    const sidebar = $('#sidebar');
+    sidebar.classList.toggle('collapsed');
+  });
+
+  //Menu de Gestion 
+  $$('.menu-title').forEach(title => {
+    title.addEventListener('click', () => {
+      const submenu = title.nextElementSibling;
+
+      submenu.classList.toggle('active');
+
+      const toggleIcon = title.$('.toggle-icon');
+      toggleIcon.style.transform = submenu.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+    });
+  });
+
+
+  //Menu Dinamico
   menuLinks.forEach(link => {
     link.addEventListener("click", (event) => {
       event.preventDefault();
@@ -18,14 +38,14 @@ document.addEventListener("DOMContentLoaded", () => {
           contentContainer.innerHTML = html;
         })
         .then(() => {
-          if (!$(`#script-${target}`)) { 
+          if (!$(`#script-${target}`)) {
             return new Promise((resolve, reject) => {
               const script = document.createElement('script');
               script.src = `/js/${target}.js`;
               script.id = `script-${target}`;
               script.onload = () => {
                 console.log(`${target}.js cargado correctamente.`);
-                resolve(); 
+                resolve();
               };
               script.onerror = () => reject(new Error(`Error al cargar el script ${target}.js`));
               document.body.appendChild(script);
