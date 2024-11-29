@@ -21,7 +21,7 @@ El API permite gestionar de forma eficiente las operaciones principales de la em
 ## Tecnologías Utilizadas
 - **Lenguaje:** Node.js
 - **Framework:** Express.js
-- **Base de Datos:** MongoDB / PostgreSQL (dependiendo del contexto)
+- **Base de Datos:** MySQL
 - **Autenticación:** JWT para proteger las rutas del API.
 
 ---
