@@ -1,12 +1,11 @@
-import { Router } from "express";
-import { methods as orderController } from "./../controllers/orden";
+const router = require('express').Router()
 
-const router = Router();
+const { getOrdenes, getOrden, addOrden, updateOrden, delOrden } = require('../controllers/ordenController')
 
-router.get("/api/ordenes", orderController.getOrdenes);
-router.post("/api/orden/add", orderController.addOrden);
-router.get("/api/orden/:id", orderController.getOrden);
-router.put("/api/orden/update/:id", orderController.updateOrden);
-router.delete("/api/orden/delete/:id", orderController.delOrden);
+router.get('/ordenes', getOrdenes)
+router.get('/orden/:id', getOrden)
+router.post('/orden', addOrden)
+router.put('/orden/:id', updateOrden)
+router.delete('/orden/:id', delOrden)
 
-export default router;
+module.exports = router

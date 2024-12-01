@@ -1,12 +1,12 @@
-import { Router } from "express";
-import { methods as meseroController } from "./../controllers/mesero";
+const router = require('express').Router()
 
-const router = Router();
+const { getMeseros, getMesero, addMesero, updateMesero, delMesero } = require('../controllers/meseroController')
 
-router.get("/api/meseros", meseroController.getMeseros);
-router.get("/api/mesero/:id", meseroController.getMesero);
-router.post("/api/mesero/add", meseroController.addMesero);
-router.put("/api/mesero/update", meseroController.updateMesero);
-router.delete("/api/mesero/delete/:id", meseroController.delMesero);
+router.get('/meseros', getMeseros)
+router.get('/mesero/:id', getMesero)
+router.post('/mesero', addMesero)
+router.put('/mesero/:id', updateMesero)
+router.delete('/mesero/:id', delMesero)
 
-export default router;
+
+module.exports = router

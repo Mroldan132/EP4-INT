@@ -1,12 +1,11 @@
-import { Router } from "express";
-import { methods as categoryController } from "./../controllers/categoria";
+const router = require('express').Router()
 
-const router = Router();
+const { getCategorias, getCategoria, addCategoria, updateCategoria, delCategoria } = require('../controllers/categoriaController')
 
-router.get("/api/categorias", categoryController.getCategorias);
-router.get("/api/categoria/:id", categoryController.getCategoria);
-router.post("/api/categoria/add", categoryController.addCategoria);
-router.put("/api/categoria/update", categoryController.updateCategoria);
-router.delete("/api/categoria/delete/:id", categoryController.delCategoria);
+router.get('/categorias', getCategorias)
+router.get('/categoria/:id', getCategoria)
+router.post('/categoria', addCategoria)
+router.put('/categoria/:id', updateCategoria)
+router.delete('/categoria/:id', delCategoria)
 
-export default router;
+module.exports = router

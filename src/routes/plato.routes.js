@@ -1,14 +1,11 @@
-import { Router } from "express";
-import { methods as platoController } from "../controllers/plato";
-import upload from "../middlewares/upload";
+const router = require('express').Router()
 
-const router = Router();
+const { getPlatos, getPlato, addPlato, updatePlato, delPlato } = require('../controllers/platoController')
 
-router.get("/api/platos", platoController.getPlatos);
-router.get("/api/plato/:id", platoController.getPlato);
-router.post("/api/plato/add", upload.single('imagen'),platoController.addPlato);
-router.put('/api/plato/update', upload.single('imagen'), platoController.updatePlato);
-router.delete("/api/plato/delete/:id", platoController.delPlato);
+router.get('/platos', getPlatos)
+router.get('/plato/:id', getPlato)
+router.post('/plato', addPlato)
+router.put('/plato/:id', updatePlato)
+router.delete('/plato/:id', delPlato)
 
-
-export default router;
+module.exports = router
